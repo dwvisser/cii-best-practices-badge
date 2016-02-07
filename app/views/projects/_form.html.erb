@@ -95,9 +95,8 @@ There is also a
   <%= bootstrap_form_for(project) do |f| %>
     <%= render 'shared/error_messages', object: f.object %>
 
-    <h2 class="center">OSS Project Basics</h2>
-
-    <h3>Identification</h3>
+    <h3 class="center">OSS Project Basics</h3>
+    <h4>Identification</h4>
       <span>What is the human-readable name of the project?</span>
 <%= render(partial: "details", locals: {
            criteria: "project_name", details: %{
@@ -135,11 +134,13 @@ This information is used when displaying badge information.
             databases when reporting vulnerabilities.
 }}) %>
       <%= f.text_field :cpe, hide_label: true, class:"form-control", placeholder:'(Optional) CPE name', disabled: is_disabled %>
-
-
+<br>
    <%# Note: render() accepts met_suppress: ..., unmet_placeholder:  ... %>
 
-    <h3>Basic Project Website Content</h3>
+   <a data-toggle="collapse" href="#websitecontent">
+     <h4>Basic Project Website Content</h4>
+   </a>
+   <div class="collapse" id="websitecontent">
       <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
               criteria: "description_sufficient", desc: %{
 The project website MUST succinctly describe what the software does
@@ -177,9 +178,14 @@ The information on how to contribute SHOULD include the basic criteria for accep
               met_url: true,
               unmet_placeholder: %{Why are the criteria so obvious that this information isn't needed?
 }}) %>
-      <br><br>
+</div>
+      <br>
 
-      <h3>OSS License</h3>
+    <a data-toggle="collapse" href="#osslicense">
+      <h4>OSS License</h4>
+    </a>
+    <div class="collapse" id="osslicense">
+
       <span>What license(s) is the project released under?</span>
       <%= render(partial: "details", locals: {
            criteria: "license", details: %{
@@ -256,9 +262,13 @@ The project MUST post license(s) in a standard location.},
 E.g., as a top-level file named LICENSE or COPYING.
 License filenames MAY be followed by an extension such as ".txt" or ".md".},
 }) %>
+</div>
+      <br>
 
-      <br><br>
-      <h3>Documentation</h3>
+    <a data-toggle="collapse" href="#documentation">
+      <h4>Documentation</h4>
+    </a>
+    <div class="collapse" id="documentation">
 
       <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
               criteria: "documentation_basics", desc: %{
@@ -278,10 +288,14 @@ The project MUST include reference documentation that describes its interface.},
               details: %{
 The project MAY use hypertext links to non-project material as documentation.
 }}) %>
+</div>
 
+      <br>
 
-      <br><br>
-      <h3>Other</h3>
+    <a data-toggle="collapse" href="#other">
+      <h4>Other</h4>
+    </a>
+    <div class="collapse" id="other">
 
       <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
               criteria: "discussion", desc: %{
@@ -298,11 +312,15 @@ they meet these criteria; make sure there is a URL-addressable
 archiving mechanism.
 Proprietary Javascript, while discouraged, is permitted.
 }}) %>
+</div>
+      <br><hr>
 
-      <br><br><br>
+      <h3 class="center">Change Control</h3>
 
-      <h2 class="center h2">Change Control</h2>
-      <h3>Public version-controlled source repository</h3>
+      <a data-toggle="collapse" href="#versioncontrol">
+        <h4>Public version-controlled source repository</h4>
+      </a>
+      <div class="collapse" id="versioncontrol">
 
        <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
                criteria: "repo_url", desc: %{
@@ -336,9 +354,13 @@ Git is not specifically required and projects
 can use centralized version control software
 (such as subversion) with justification.
 }}) %>
+</div>
+      <br>
 
-      <br><br>
-      <h3>Version numbering</h3>
+      <a data-toggle="collapse" href="#versionnumber">
+        <h4>Version numbering</h4>
+      </a>
+      <div class="collapse" id="versionnumber">
 
       <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
                criteria: "version_unique", desc: %{
@@ -364,9 +386,13 @@ It is SUGGESTED that projects identify each release within their version control
 For example, it is SUGGESTED that those using git identify each
 release using git tags.
 }}) %>
+</div>
+      <br>
 
-      <br><br>
-      <h3>ChangeLog</h3>
+    <a data-toggle="collapse" href="#changelog">
+      <h4>ChangeLog</h4>
+    </a>
+    <div class="collapse" id="changelog">
 
       <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
                criteria: "release_notes", desc: %{
@@ -396,11 +422,14 @@ decide whether or not they will want to update, and what the impact would be
 The release notes MUST identify every publicly known vulnerability
 that is fixed in each new release.
 }}) %>
-      <hr>
+</div>
+      <br><hr>
 
-      <br><br><br>
-      <h2 class="center h2">Reporting</h2>
-      <h3>Bug reporting process</h3>
+      <h3 class="center">Reporting</h3>
+      <a data-toggle="collapse" href="#bugreport">
+        <h4>Bug reporting process</h4>
+      </a>
+      <div class="collapse" id="bugreport">
 
       <!-- TODO: Add report_url to model and database.
       <span>If an issue tracker is used, please provide its URL.
@@ -437,10 +466,14 @@ The project SHOULD respond to most enhancement requests in the last 2-12 months 
                criteria: "report_archive", met_url: true, desc: %{
 The project MUST have a publicly available archive for reports and responses for later searching.
 }}) %>
+</div>
+      <br>
 
-      <br><br>
+    <a data-toggle="collapse" href="#vulnreport">
+      <h4>Vulnerability reporting process</h4>
+    </a>
+    <div class="collapse" id="vulnreport">
 
-      <h3>Vulnerability reporting process</h3>
       <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
                criteria: "vulnerability_report_process", desc: %{
 The project MUST publish the process for reporting vulnerabilities on the project site.},
@@ -469,10 +502,14 @@ automatically met.
 The project's initial response time for any vulnerability report received
 in the last 6 months MUST be less than or equal to 14 days.
 }}) %>
+</div>
+     <br><hr>
 
-     <br><br><br>
-     <h2 class="center h2">Quality</h2>
-     <h3>Working build system</h3>
+     <h3 class="center">Quality</h3>
+    <a data-toggle="collapse" href="#buildsystem">
+      <h4>Working build system</h4>
+    </a>
+    <div class="collapse" id="buildsystem">
 
       <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
                criteria: "build", desc: %{
@@ -499,10 +536,12 @@ For example, Maven, Ant, cmake, the autotools, make, or rake.
                criteria: "build_oss_tools", desc: %{
 The project SHOULD be buildable using only OSS tools.
 }}) %>
-
-      <br><br>
-
-      <h3>Automated test suite</h3>
+</div>
+      <br>
+    <a data-toggle="collapse" href="#testsuite">
+      <h4>Automated test suite</h4>
+    </a>
+    <div class="collapse" id="testsuite">
 
       <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
                criteria: "test", desc: %{
@@ -534,11 +573,14 @@ It is SUGGESTED that the project implement continuous integration
 (where new or changed code is frequently integrated into a central
 code repository and automated tests are run on the result).
 }}) %>
+</div>
 
+    <br>
 
-
-    <br><br>
-    <h3>New functionality testing</h3>
+    <a data-toggle="collapse" href="#newtesting">
+      <h4>New functionality testing</h4>
+    </a>
+    <div class="collapse" id="newtesting">
 
       <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
                criteria: "test_policy", desc: %{
@@ -567,9 +609,13 @@ It is SUGGESTED that this policy on adding tests be
 However, even an informal rule is acceptable as long as the tests are being
 added in practice.
 }}) %>
+</div>
+    <br>
 
-    <br><br>
-    <h3>Warning flags</h3>
+    <a data-toggle="collapse" href="#warningflags">
+      <h4>Warning flags</h4>
+    </a>
+    <div class="collapse" id="warningflags">
 
       <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
                criteria: "warnings", desc: %{
@@ -598,10 +644,14 @@ The project MUST address warnings.},
 It is SUGGESTED that projects be maximally strict with warnings, but this is not
 always practical.
 }}) %>
+</div>
+    <br><hr>
+    <h3 class="center">Security</h3>
 
-    <br><br><br>
-    <h2 class="center h2">Security</h2>
-    <h3>Secure development knowledge</h3>
+    <a data-toggle="collapse" href="#secureknowledge">
+      <h4>Secure development knowledge</h4>
+    </a>
+    <div class="collapse" id="secureknowledge">
 
     <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
              criteria: "know_secure_design", desc: %{
@@ -651,10 +701,13 @@ See the <a href="http://cwe.mitre.org/top25/">CWE/SANS top 25</a> or
 <a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project">OWASP Top 10</a>
 for commonly-used lists.
 }}) %>
+</div>
+    <br>
 
-    <br><br><br>
-    <h3>Good cryptographic practices</h3>
-
+    <a data-toggle="collapse" href="#goodcrypto">
+      <h4>Good cryptographic practices</h4>
+    </a>
+    <div class="collapse" id="goodcrypto">
 
 <span class="criteria-desc">
 Note that some software does not need to directly use cryptographic capabilities.
@@ -753,9 +806,13 @@ hardware random number generator, or it may be
 a cryptographically secure pseudo-random number generator (CSPRNG) using
 an algorithm such as Hash_DRBG, HMAC_DRBG, CTR_DRBG, Yarrow, or Fortuna.
 }}) %>
+</div>
+    <br>
 
-    <br><br>
-    <h3>Secured delivery against man-in-the-middle (MITM) attacks</h3>
+    <a data-toggle="collapse" href="#mitmattacks">
+      <h4>Secured delivery against man-in-the-middle (MITM) attacks</h4>
+    </a>
+    <div class="collapse" id="mitmattacks">
 
     <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
              criteria: "delivery_mitm", desc: %{
@@ -776,8 +833,13 @@ used without checking for a cryptographic signature.},
              details: %{
 These hashes can be modified in transit.
 }}) %>
+</div>
+  <br>
 
-    <h3>Publicly-known vulnerabilities fixed</h3>
+  <a data-toggle="collapse" href="#knownvulnerabilities">
+    <h4>Publicly-known vulnerabilities fixed</h4>
+  </a>
+  <div class="collapse" id="knownvulnerabilities">
 
     <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
              criteria: "vulnerabilities_fixed_60_days", desc: %{
@@ -806,12 +868,15 @@ verify by those outside the project.
 Projects SHOULD fix all critical vulnerabilities rapidly after they
 are reported.
 }}) %>
-    <br>
+</div>
 
+    <br><hr>
+    <h3 class="center">Analysis</h3>
 
-    <br><br><br>
-    <h2 class="center h2">Analysis</h2>
-    <h3>Static code analysis</h3>
+    <a data-toggle="collapse" href="#staticanalysis">
+      <h4>Static code analysis</h4>
+    </a>
+    <div class="collapse" id="staticanalysis">
 
      <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
              criteria: "static_analysis", desc: %{
@@ -850,10 +915,14 @@ A vulnerability is medium to high severity if its <a href="https://nvd.nist.gov/
              criteria: "static_analysis_often", desc: %{
 It is SUGGESTED that static source code analysis occur on every commit or at least daily.
 }}) %>
+</div>
+     <br>
 
-     <br><br>
+     <a data-toggle="collapse" href="#dynamicanalysis">
+       <h4>Dynamic analysis</h4>
+     </a>
+     <div class="collapse" id="dynamicanalysis">
 
-     <h3>Dynamic analysis</h3>
 
       <%= render(partial: "status_chooser", locals: {f: f, is_disabled: is_disabled,
               criteria: "dynamic_analysis", desc: %{
@@ -898,6 +967,7 @@ All confirmed medium and high severity exploitable vulnerabilities discovered
 with dynamic code analysis MUST be fixed. A vulnerability is medium to high
 severity if its <a href="https://nvd.nist.gov/cvss.cfm">CVSS 2.0</a> base score is 4 or higher.
 }}) %>
+</div>
       <hr>
 
       <br>
