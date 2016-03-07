@@ -152,17 +152,12 @@ if [ "$MYINSTALL_SYSTEM_INSTALL_PACKAGES" = 'yes' ] ; then
   echo "  ${MYINSTALL_SYSTEM_INSTALL_PREFIX} $installer $PACKAGES"
   # shellcheck disable=SC2086
   $MYINSTALL_SYSTEM_INSTALL_PREFIX $installer $PACKAGES
-  if [ "$manager" = 'apt-get' ] ; then
-    echo "  We will be replacing rbenv with v1.0.0 from GitHub."
-    echo "  sudo $manager remove rbenv"
-    sudo "$manager" remove rbenv
-  fi
 else
   echo 'Skipping system package install.'
 fi
 
 
-# Install rbenv via GitHub, if it isn't already installed,
+# Install rbenv 1.0.0 via GitHub, if it isn't already installed,
 # to let us select a specific version of ruby.
 echo
 echo 'STAGE 3: Install and setup rbenv and ruby-build'
@@ -171,11 +166,18 @@ if is_command 'rvm' ; then
   echo 'WARNING: rvm installed, may be incompatible with rbenv.' >&2
 fi
 
+DO_LOCAL_RBENV='no'
 if is_command 'rbenv' ; then
   echo 'rbenv already installed.'
+  if ! rbenv --version | grep "1\.0\.0" > /dev/null 2>&1 ; then
+    echo '  Installed rbenv version != 1.0.0'
+    DO_LOCAL_RBENV='yes'
+  fi
 elif [ "$MYINSTALL_RBENV" != 'yes' ] ; then
   echo 'Skipping rbenv install.'
-else
+fi
+
+if [ $DO_LOCAL_RBENV = 'yes' ] ; then
   echo 'Downloading and installing rbenv from GitHub' >&2
   git clone git://github.com/rbenv/rbenv.git ~/.rbenv
   # Following performed in subshell so as not to change working directory.
@@ -185,7 +187,7 @@ else
   )
 fi
 
-if [ "$MYINSTALL_RBENV" = 'yes' ] ; then
+if [ "$DO_LOCAL_RBENV" = 'yes' ] ; then
   # ensure rbenv is on the PATH when running the rest of this script.
   export PATH="$HOME/.rbenv/bin:$PATH"
 
@@ -246,7 +248,7 @@ echo 'STAGE 4: For this project, force install fixed version of ruby'
 
 if [ "$MYINSTALL_RBENV" = 'yes' ] && is_command rbenv ; then
   # Get ruby version from Gemfile.
-  ruby_version=$(grep '^ruby ' Gemfile | sed -e "s/ruby '//" -e "s/'.*//")
+  ruby_version=$(cat .ruby-version)
   echo "Using rbenv to locally install ruby version ${ruby_version}"
   rbenv install --skip-existing "$ruby_version"
   rbenv local "$ruby_version" # In this directory AND BELOW, use this version.
