@@ -298,3 +298,4 @@ fi
 bin/rake
 
 echo 'All done! Use "rails server" and view localhost:3000 to see it run.'
+echo '(It may be necessary to reinitialize the shell or start a new shell.)'
