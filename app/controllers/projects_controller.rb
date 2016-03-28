@@ -16,14 +16,9 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @search = Project.ransack(params[:q])
-    if params[:q].present?
-      @projects = @search.result
-                         .paginate(page: params[:page]) # per_page: 5
-    else
-      @projects = Project.all.includes(:user)
-                      .paginate(page: params[:page]) # per_page: 5
-    end
+    @search = Project.all.includes(:user).ransack(params[:q])
+    @projects = @search.result
+                       .paginate(page: params[:page]) # per_page: 5
     # set_surrogate_key_header 'projects', @projects.map(&:record_key)
   end
 
