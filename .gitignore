@@ -24,3 +24,17 @@
 
 # Dropbox
 .DS_Store
+
+# Rake output files
+CHANGELOG.html
+CONTRIBUTING.html
+README.html
+doc/INSTALL.html
+doc/background.html
+doc/criteria.html
+doc/dawnscanner.html
+doc/implementation.html
+doc/other.html
+doc/security.html
+license_finder_report.html
+license_okay
