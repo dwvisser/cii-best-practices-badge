@@ -12,7 +12,8 @@ class Project < ActiveRecord::Base
     end
   end
 
-  BADGE_STATUS_CHOICE = [BadgeStatus.new('in_progress', 'in progress'),
+  BADGE_STATUS_CHOICE = [BadgeStatus.new(nil, nil),
+                         BadgeStatus.new('in_progress', 'in progress'),
                          BadgeStatus.new('passing', 'passing'),
                          BadgeStatus.new('failing', 'failing')].freeze
   STATUS_CHOICE = %w(? Met Unmet).freeze
