@@ -10,6 +10,7 @@ gem 'bootstrap_form', '2.3.0'
 gem 'faker', '1.6.3'
 gem 'fastly-rails', '0.5.0' # Use Fastly CDN
 gem 'github_api', '0.13.1'
+gem 'imagesLoaded_rails', '4.1.0' # Javascript - enable wait for image load
 gem 'jbuilder', '2.4.1'
 gem 'jquery-rails', '4.1.1' # Javascript jQuery library (for Rails)
 gem 'jquery-ui-rails', '5.0.5' # Javascript jQueryUI library (for Rails)
@@ -63,7 +64,7 @@ group :test do
   gem 'coveralls', '0.8.13', require: false
   gem 'm', '1.4.2' # Run test/unit tests by line number
   gem 'minitest-rails-capybara', '2.1.1', require: false
-  gem 'minitest-retry', '0.1.4' # Rerun tests (counter false Capybara fails)
+  gem 'minitest-retry', '0.1.4', require: false # Avoid Capybara false positives
   gem 'poltergeist', '1.9.0', require: false
   gem 'selenium-webdriver', '2.53.0', require: false
   gem 'simplecov', '0.11.2', require: false
