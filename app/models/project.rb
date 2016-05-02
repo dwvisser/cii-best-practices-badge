@@ -2,7 +2,8 @@
 class Project < ActiveRecord::Base
   using SymbolRefinements
 
-  #  BADGE_STATUS_CHOICE = %w(in_progress passing failing).freeze
+  # Ransack needs an "ActiveRecord"-like object for populating the dropdown,
+  # or it won't do its query generation magic.
   class BadgeStatus
     attr_reader :id, :name
 
