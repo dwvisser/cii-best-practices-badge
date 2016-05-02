@@ -1,10 +1,7 @@
 class AddBadgeStatusToProjects < ActiveRecord::Migration
-  def change
+  def up
     add_column :projects, :badge_status, :string
     add_index :projects, :badge_status
-  end
-
-  def up
     Project.find_each do |project|
       project.update_badge_status
       project.save
@@ -12,6 +9,7 @@ class AddBadgeStatusToProjects < ActiveRecord::Migration
   end
 
   def down
-    # Having projects.badge_status column remain is OK.
+    remove_index :projects, :badge_status
+    remove_column :projects, :badge_status
   end
 end
