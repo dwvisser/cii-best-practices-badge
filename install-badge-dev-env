@@ -277,6 +277,8 @@ db_present=$(rails runner 'puts ActiveRecord::Base.connection.tables.present?')
 
 case "$db_present" in
 false)
+  echo 'Make sure PostgreSQL superuser role for current user exists.'
+  sudo -u postgres createuser -s `whoami`
   echo 'Database not present. Running "rake db:setup" to seed with dummy data'
   rake db:setup ;;
 true)
