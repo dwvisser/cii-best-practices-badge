@@ -136,7 +136,7 @@ case "$manager" in
   yum|dnf)
     add_pkg gcc openssl-devel libyaml-devel libffi-devel readline-devel \
             zlib-devel gdbm-devel ncurses-devel postgresql-devel cmake npm \
-            postgresql-server;;
+            postgresql-server postgresql-contrib ;;
   zypper)
     add_pkg gcc automake gdbm-devel libffi-devel libyaml-devel \
             openssl-devel ncurses-devel readline-devel zlib-devel ;;
@@ -160,10 +160,11 @@ fi
 
 case "$manager" in
   yum|dnf)
-    npm install phantomjs-prebuilt ;;
+    npm install phantomjs-prebuilt
     sudo postgresql-setup initdb
     sudo systemctl enable postgresql
     sudo systemctl start postgresql
+    ;;
   *)
     # do nothing
 esac
