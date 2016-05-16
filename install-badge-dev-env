@@ -31,7 +31,7 @@ PACKAGES=''
 add_pkg () {
   for p ; do
     if [ "$p" = '' ] || [ "$p" = '-' ] ; then continue ; fi
-    if [ "$p" = 'sqlite3' ] && [ "$manager" = 'yum' ] ; then
+    if [ "$p" = 'sqlite3' ] && [[ "$manager" = 'dnf' || "$manager" = 'yum' ]] ; then
       p='sqlite'
     fi
     PACKAGES="$PACKAGES $p"
@@ -159,7 +159,7 @@ fi
 
 case "$manager" in
   yum|dnf)
-    npm install phantomjs-prebuilt
+    npm install phantomjs-prebuilt ;;
   *)
     # do nothing
 esac
