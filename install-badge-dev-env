@@ -135,7 +135,8 @@ case "$manager" in
             phantomjs;;
   yum|dnf)
     add_pkg gcc openssl-devel libyaml-devel libffi-devel readline-devel \
-            zlib-devel gdbm-devel ncurses-devel postgresql npm;;
+            zlib-devel gdbm-devel ncurses-devel postgresql-devel cmake npm \
+            postgresql-server;;
   zypper)
     add_pkg gcc automake gdbm-devel libffi-devel libyaml-devel \
             openssl-devel ncurses-devel readline-devel zlib-devel ;;
@@ -180,8 +181,11 @@ if is_command 'rbenv' ; then
     echo '  Installed rbenv version != 1.0.0'
     DO_LOCAL_RBENV='yes'
   fi
-elif [ "$MYINSTALL_RBENV" != 'yes' ] ; then
-  echo 'Skipping rbenv install.'
+else
+  DO_LOCAL_RBENV='yes'
+  if [ "$MYINSTALL_RBENV" != 'yes' ] ; then
+    echo 'Skipping rbenv install.'
+  fi
 fi
 
 if [ $DO_LOCAL_RBENV = 'yes' ] ; then
