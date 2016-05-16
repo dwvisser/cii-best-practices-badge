@@ -161,6 +161,9 @@ fi
 case "$manager" in
   yum|dnf)
     npm install phantomjs-prebuilt ;;
+    sudo postgresql-setup initdb
+    sudo systemctl enable postgresql
+    sudo systemctl start postgresql
   *)
     # do nothing
 esac
