@@ -57,17 +57,6 @@ find_command () {
   false
 }
 
-get_shell_init () {
-  local f=''
-  for try in .bashrc .bash_profile .zshrc .profile ; do
-    if [ -f "$HOME/$try" ] ; then
-      f="$HOME/$try"
-      break
-    fi
-  done
-  return "$f"
-}
-
 # $1 is the shell init file
 # $2 is base part of path /home... without trailing slash
 # $3 is unique end part of path
@@ -190,7 +179,13 @@ else
   echo 'Skipping system package install.'
 fi
 
-shell_init="$(get_shell_init)"
+shell_init=''
+for try in .bashrc .bash_profile .zshrc .profile ; do
+  if [ -f "$HOME/$try" ] ; then
+    shell_init="$HOME/$try"
+    break
+  fi
+done
 
 case "$manager" in
   yum|dnf)
