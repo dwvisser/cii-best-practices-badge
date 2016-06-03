@@ -12,14 +12,13 @@ class HardenedSitesDetective < Detective
   MET =
     {
       value: 'Met', confidence: 3,
-      explanation: 'Found all required security hardening headers (values not'\
-        'checked).'
+      explanation: 'Found all required security hardening headers.'
     }.freeze
   UNMET_MISSING =
     {
       value: 'Unmet', confidence: 5,
-      explanation: 'At least one of the required security hardening headers is'\
-        'missing.'
+      explanation: 'One or more of the required security hardening headers '\
+        'is missing.'
     }.freeze
   UNMET_NOSNIFF =
     {
@@ -40,8 +39,7 @@ class HardenedSitesDetective < Detective
 
   def get_headers(evidence, url)
     response = evidence.get(url)
-    headers = response.nil? ? {} : response[:meta]
-    headers.nil? ? {} : headers
+    response.nil? ? {} : response[:meta]
   end
 
   def check_nosniff?(headers_list)
