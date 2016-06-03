@@ -27,11 +27,16 @@ class HardenedSitesDetective < Detective
     CHECK.reduce(true) { |a, e| a & headers.key?(e) }
   end
 
+  def get_headers(evidence, url)
+    response = evidence.get(url)
+    response.nil? ? {} : response[:metas]
+  end
+
   def check_urls(evidence, homepage_url, repo_url)
     @results = {}
     if !homepage_url.blank? && !repo_url.blank?
-      homepage_headers = evidence.get(homepage_url)[:metas]
-      repo_headers = evidence.get(repo_url)[:metas]
+      homepage_headers = get_headers(evidence, homepage_url)
+      repo_headers = get_headers(evidence, repo_url)
       hardened = security_fields_present?(homepage_headers) &&
                  security_fields_present?(repo_headers)
       @results[:hardened_site_status] = hardened ? MET : UNMET
